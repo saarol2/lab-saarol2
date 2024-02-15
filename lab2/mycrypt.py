@@ -29,15 +29,5 @@ def encode(s):
     return crypted[:origlen]
 
 def decode(s):
-    decrypted = ""
-    digitmapping = dict(zip('1234567890!"#€%&/()=', '!"#€%&/()=1234567890'))
-    for c in s:
-        if c.isalpha():
-            if c.isupper():
-                c=c.lower()
-            #Rot-13 decryption
-            decrypted += codecs.decode(c, 'rot-13')
-        elif c in digitmapping:
-            decrypted += digitmapping[c]
-    return decrypted
+    return encode(s).lower()
 
