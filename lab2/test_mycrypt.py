@@ -48,7 +48,6 @@ def test_invalid_types(invalid_input):
     with pytest.raises(TypeError):
         mycrypt.encode(invalid_input)
 
-
 def test_timing():
     '''Test whether encoding runs in approximately constant time, repetitions
     kept low to make test fast, use smallest measured time.
@@ -63,3 +62,9 @@ def test_timing():
     timing2 = min(timeit.repeat('mycrypt.encode("a"*1000)',
                                 'import mycrypt', repeat=3, number=30))
     assert 0.95 * timing2 < timing1 < 1.05 * timing2
+
+@pytest.mark.parametrize("invalid_input", ["x" * 1001])
+def test_invalid_length(invalid_input):
+    '''Strings that are longer than 1000 characters should raise ValueError'''
+    with pytest.raises(ValueError):
+        mycrypt.encode(invalid_input)
