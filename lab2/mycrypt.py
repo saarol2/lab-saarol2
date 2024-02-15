@@ -4,14 +4,13 @@ def encode(s):
     if not isinstance(s,str):
         raise TypeError
     origlen = len(s)
+    s += "x" * (1000 - len(s))
     #Pad the string to max length
     crypted = ""
     digitmapping = dict(zip('1234567890!"#€%&/()=','!"#€%&/()=1234567890'))
     invalid_char = {'\xe5', '\xe4', '\xf6'}
     if len(s) > 1000:
         raise ValueError
-    else:
-        s += "x" * (1000 - len(s))
     for c in s:
         if c in invalid_char:
             #Character is invalid
@@ -30,15 +29,4 @@ def encode(s):
     return crypted[:origlen]
 
 def decode(s):
-    decrypted = ""
-    digitmapping = dict(zip('1234567890!"#€%&/()=', '!"#€%&/()=1234567890'))
-    for c in s:
-        if c.isalpha():
-            if c.isupper():
-                c=c.lower()
-            #Rot-13 decryption
-            decrypted += codecs.decode(c, 'rot-13')
-        elif c in digitmapping:
-            decrypted += digitmapping[c]
-    return decrypted
-
+    return encode(s).lower()

@@ -42,17 +42,12 @@ def test_invalid_char(invalid_input):
         mycrypt.encode(invalid_input)
 
 
-@pytest.mark.parametrize("invalid_input", [])
+@pytest.mark.parametrize("invalid_input", [1, 2.3, [1, 2, 3], (1, 2), ("1", "2"), True, None])
 def test_invalid_types(invalid_input):
     '''Invalid parameter types should raise TypeError'''
     with pytest.raises(TypeError):
         mycrypt.encode(invalid_input)
 
-@pytest.mark.parametrize("invalid_input", [1, 2.3, [1, 2, 3], (1, 2), ("1", "2"), True, None])
-def test_different_types(invalid_input):
-    '''These parameter types should raise TypeError'''
-    with pytest.raises(TypeError):
-        mycrypt.encode(invalid_input)
 
 def test_timing():
     '''Test whether encoding runs in approximately constant time, repetitions
